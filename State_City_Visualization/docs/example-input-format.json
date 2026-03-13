@@ -1,0 +1,10 @@
+{
+  "qubits": <number_of_qubits>,
+  "stages": [
+    {
+      "name": "<stage_name>",
+      "state_vector": [<amplitude_0>, <amplitude_1>, ...]
+    },
+    ...
+  ]
+}
