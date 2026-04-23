@@ -1,0 +1,794 @@
+% =========================================================================
+% SciPost LaTeX template
+% Version 2024-07
+%
+% Submissions to SciPost Journals should make use of this template.
+%
+% INSTRUCTIONS: simply look for the `TODO:' tokens and adapt your file.
+% ========================================================================
+
+\documentclass{SciPost}
+
+% Prevent all line breaks in inline equations.
+\binoppenalty=10000
+\relpenalty=10000
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+% ── Encoding & fonts ────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ── Page layout ─────────────────────────────────────────────
+\usepackage[bitstream-charter]{mathdesign}
+\urlstyle{same}
+
+% ── Mathematics ─────────────────────────────────────────────
+\usepackage{amsmath,amssymb,braket}
+
+
+% ── Graphics & color ────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage[dvipsnames,table]{xcolor}
+\definecolor{sciblue}{RGB}{26,82,118}
+\definecolor{sciacct}{RGB}{40,116,166}
+\definecolor{scigrey}{RGB}{85,85,85}
+\definecolor{codebg}{RGB}{235,245,251}
+
+% ── Tables ──────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+
+% Fix \cal and \mathcal characters look (so it's not the same as \mathscr)
+\DeclareSymbolFont{usualmathcal}{OMS}{cmsy}{m}{n}
+\DeclareSymbolFontAlphabet{\mathcal}{usualmathcal}
+
+\fancypagestyle{SPstyle}{
+\fancyhf{}
+\lhead{\colorbox{scipostblue}{\bf \color{white} ~SciPost Physics Codebases }}
+\rhead{{\bf \color{scipostdeepblue} ~Submission }}
+\renewcommand{\headrulewidth}{1pt}
+\fancyfoot[C]{\textbf{\thepage}}
+}
+
+\usepackage{minted}
+
+\begin{document}
+
+\pagestyle{SPstyle}
+
+\begin{center}{\Large \textbf{\color{scipostdeepblue}{
+%%%%%%%%%% TODO: Write your article's title here
+Quantum State Visualization in Qiskit\\
+%%%%%%%%%% END TODO: TITLE
+}}}\end{center}
+
+\begin{center}\textbf{
+%%%%%%%%%% TODO: AUTHORS
+% Write the author list here. 
+% Use (full) first name (+ middle name initials) + surname format.
+% Separate subsequent authors by a comma, omit comma and use "and" for the last author.
+% Mark the corresponding author(s) with a superscript symbol in this order
+% \star, \dagger, \ddagger, \circ, \S, \P, \parallel, ...
+Mithilesh Kumar\textsuperscript{1$\star$},
+Vivek Maadoori\textsuperscript{2$\dagger$}
+%%%%%%%%%% END TODO: AUTHORS
+}\end{center}
+
+\begin{center}
+%%%%%%%%%% TODO: AFFILIATIONS
+% Write all affiliations here.
+% Format: institute, city, country
+Krea University, Sri City
+%
+%%%%%%%%%% END TODO: AFFILIATIONS
+%%%%%%%%%% TODO: EMAIL
+% Provide email address of corresponding author(s)
+\\[\baselineskip]
+$\star$ \href{mailto:email1}{\small mithilesh.kumar@krea.edu.in}\,,\quad
+$\dagger$ \href{mailto:email2}{\small vivek\_maadoori.sias19@krea.ac.in}
+
+%%%%%%%%%% END TODO: EMAIL
+\end{center}
+
+
+\section*{\color{scipostdeepblue}{Abstract}}
+\textbf{\boldmath{%
+%%%%%%%%%% TODO: ABSTRACT
+% Write your abstract here.
+This qiskit-based library provides implementations of various quantum state visualization methods.
+%%%%%%%%%% END TODO: ABSTRACT
+}}
+
+\vspace{\baselineskip}
+
+%%%%%%%%%% BLOCK: Copyright information
+% This block will be filled during the proof stage, and finilized just before publication.
+% It exists here only as a placeholder, and should not be modified by authors.
+\noindent\textcolor{white!90!black}{%
+\fbox{\parbox{0.975\linewidth}{%
+\textcolor{white!40!black}{\begin{tabular}{lr}%
+  \begin{minipage}{0.6\textwidth}%
+    {\small Copyright attribution to authors. \newline
+    This work is a submission to SciPost Physics Codebases. \newline
+    License information to appear upon publication. \newline
+    Publication information to appear upon publication.}
+  \end{minipage} & \begin{minipage}{0.4\textwidth}
+    {\small Received Date \newline Accepted Date \newline Published Date}%
+  \end{minipage}
+\end{tabular}}
+}}
+}
+%%%%%%%%%% BLOCK: Copyright information
+
+
+%%%%%%%%%% TODO: LINENO
+% For convenience during refereeing we turn on line numbers:
+\linenumbers
+% You should run LaTeX twice in order for the line numbers to appear.
+%%%%%%%%%% END TODO: LINENO
+
+%%%%%%%%%% TODO: TOC 
+% Guideline: if your paper is longer that 6 pages, include a TOC
+% To remove the TOC, simply cut the following block
+\vspace{10pt}
+\noindent\rule{\textwidth}{1pt}
+\tableofcontents
+\noindent\rule{\textwidth}{1pt}
+\vspace{10pt}
+%%%%%%%%%% END TODO: TOC
+
+
+%%%%%%%%% TODO: CONTENTS 
+% Write your article contents here, starting from first \section.
+% An example structure is given below.
+
+\section{Introduction}
+\label{sec:intro}
+% TODO: write your article here.
+
+Quantum computing has matured rapidly from a theoretical curiosity into a
+technology with near-term practical applications, driven by variational hybrid
+algorithms such as the Quantum Approximate Optimization Algorithm
+(QAOA)~\cite{Farhi2014} and the Variational Quantum Eigensolver
+(VQE)~\cite{Peruzzo2014}.
+Alongside this technical maturation, the need to develop strong geometric and
+physical intuition about quantum states has become increasingly important for
+practitioners working on algorithm design, debugging variational circuits, and
+communicating results to broader audiences.
+
+Despite the existence of mature quantum simulation frameworks---most notably
+Qiskit~\cite{Qiskit2023}, Cirq~\cite{Cirq2024},
+PennyLane~\cite{Bergholm2018}, and QuTiP~\cite{Johansson2012}---these tools
+are primarily optimized for computation rather than visualization.
+The built-in plotting utilities they provide are often limited in scope,
+require non-trivial boilerplate to invoke, and lack interactive or multi-modal
+presentation capabilities.
+Users wishing to visualize density matrices, cost landscapes, or time
+evolution frequently must either write custom Matplotlib routines or string
+together disparate utilities across multiple packages.
+
+\texttt{quantumviz} fills this gap by providing a unified, composable
+visualization toolkit that covers the most common representational needs
+arising in quantum algorithm development.
+The library is structured around a small set of high-level functions and an
+optional command-line interface (CLI), so that a researcher can obtain a
+publication-quality figure with a single function call or a one-line shell
+command.
+An optional web dashboard further lowers the barrier for interactive
+exploration, requiring no Python programming knowledge beyond launching a
+server process.
+
+The remainder of this paper is organized as follows.
+Section~\ref{sec:related} situates \texttt{quantumviz} among related
+visualization software.
+Section~\ref{sec:architecture} describes the library architecture and module
+structure.
+Section~\ref{sec:modalities} documents each visualization modality in detail.
+Section~\ref{sec:dashboard} covers the interactive dashboard and hardware
+integration.
+Section~\ref{sec:examples} presents representative example applications.
+Section~\ref{sec:installation} describes installation and testing.
+Section~\ref{sec:conclusions} concludes with a summary and outlook.
+
+% ============================================================
+\section{Related Software}
+\label{sec:related}
+% ============================================================
+
+A number of existing tools offer partial overlap with the capabilities of
+\texttt{quantumviz}.
+Table~\ref{tab:comparison} provides a structured comparison.
+
+\begin{table}[h]
+\centering
+\caption{Comparison of visualization capabilities across quantum software
+         packages. A checkmark indicates native support; ``partial'' indicates
+         limited or workflow-coupled support.}
+\label{tab:comparison}
+\renewcommand{\arraystretch}{1.3}
+\rowcolors{2}{white}{gray!10}
+\begin{tabular}{lccccc}
+\toprule
+\rowcolor{sciacct!20}
+\textbf{Package} &
+\textbf{Bloch sphere} &
+\textbf{Density matrix} &
+\textbf{Cost landscape} &
+\textbf{Circuit} &
+\textbf{Dashboard} \\
+\midrule
+\texttt{quantumviz} (this work) & \checkmark & \checkmark\ (3D) & \checkmark & \checkmark & \checkmark \\
+Qiskit                          & \checkmark & partial           & ---         & \checkmark & ---        \\
+QuTiP                           & \checkmark & \checkmark        & ---         & ---         & ---        \\
+PennyLane                       & \checkmark & ---               & partial     & \checkmark & ---        \\
+Cirq                            & ---         & ---               & ---         & \checkmark & ---        \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Qiskit provides a Bloch sphere renderer (via \texttt{statevector\_to\_bloch})
+and an excellent circuit drawer, but offers no cost landscape or density
+matrix visualization.
+QuTiP's \texttt{Bloch} class is well-regarded and its Wigner and Hinton
+functions support density-matrix inspection, but it does not target gate-based
+circuit visualization or variational landscapes.
+PennyLane includes cost-surface plotting utilities for two-parameter circuits,
+but these are tightly coupled to its gradient-based optimization workflow.
+None of the above packages provides an out-of-the-box web dashboard for
+interactive state exploration.
+
+\texttt{quantumviz} is therefore distinguished by its breadth of coverage
+across all major visualization categories, its unified API, and its optional
+interactive frontend---all accessible through a single \texttt{pip install}.
+
+% ============================================================
+\section{Library Architecture}
+\label{sec:architecture}
+% ============================================================
+
+\subsection{Module Structure}
+
+\texttt{quantumviz} is organized as a single top-level package
+(\texttt{src/quantumviz/}) with the following module layout:
+
+\begin{lstlisting}
+src/quantumviz/
+├── __init__.py          # public API surface
+├── bloch.py             # Bloch sphere renderer
+├── state_city.py        # density matrix 3-D bar chart
+├── cost_landscape.py    # QAOA / VQE landscape plotter
+├── circuit.py           # circuit diagram rendering
+├── dynamic_flow.py      # time evolution & Rabi oscillations
+├── dashboard/           # FastAPI web server (optional)
+│   ├── app.py
+│   └── routes.py
+└── hardware.py          # IBM Quantum integration (optional)
+\end{lstlisting}
+
+The public API is surfaced through \texttt{\_\_init\_\_.py} and consists of
+five functions---\texttt{plot\_bloch\_sphere}, \texttt{plot\_state\_city},
+\texttt{plot\_cost\_landscape}, \texttt{plot\_circuit}, and
+\texttt{plot\_dynamic\_flow}---as well as two utility helpers:
+\texttt{state\_to\_density} (converts a complex state vector to a density
+matrix) and \texttt{density\_to\_bloch} (extracts Bloch vector components
+from a density matrix).
+
+\subsection{Design Principles}
+
+The library is designed around four guiding principles:
+
+\begin{itemize}
+  \item \textbf{Minimal dependencies for the core package.}  The mandatory
+    requirements are restricted to \texttt{numpy}~$\geq 1.20$ and
+    \texttt{matplotlib}~$\geq 3.5$.  All optional capabilities---the dashboard
+    (FastAPI, Uvicorn, Pydantic) and hardware support (Qiskit,
+    Qiskit-IBM-Runtime)---are available via extras and are never imported
+    unless explicitly requested.
+
+  \item \textbf{Input format flexibility.}  Each visualization function
+    accepts the most natural input format for its domain.  For example, the
+    Bloch sphere renderer parses ket notation, spherical angle specifications,
+    and raw Cartesian Bloch vectors from a plain-text file without requiring
+    the user to construct any library objects.
+
+  \item \textbf{CLI parity.}  Every Python API function has an equivalent CLI
+    subcommand, enabling integration into shell scripts and analysis pipelines
+    without writing any Python code.
+
+  \item \textbf{Testability.}  The test suite (\texttt{tests/}) provides unit
+    tests for each module and a coverage-enabled integration test that
+    exercises the full API surface with small synthetic inputs.
+\end{itemize}
+
+\subsection{Dependency Graph}
+
+Figure~\ref{fig:depgraph} (schematic) illustrates the dependency structure.
+The \emph{core ring} (\texttt{bloch}, \texttt{state\_city},
+\texttt{cost\_landscape}, \texttt{circuit}, \texttt{dynamic\_flow}) depends
+only on \texttt{numpy} and \texttt{matplotlib}.
+The \emph{dashboard ring} additionally depends on FastAPI and Pydantic.
+The \emph{hardware ring} depends on Qiskit and is always optional.
+This structure ensures that users who install the base package
+(\texttt{pip install quantumviz}) obtain a lightweight footprint with no
+framework dependencies.
+
+\begin{figure}[h]
+\centering
+% Schematic placeholder — replace with actual TikZ or PDF figure
+\fbox{\parbox{0.7\linewidth}{\centering\vspace{2em}
+  [Dependency graph figure]\par
+  Core: numpy, matplotlib $\to$ bloch, state\_city, cost\_landscape, circuit, dynamic\_flow\par
+  Optional: FastAPI/Pydantic $\to$ dashboard\par
+  Optional: Qiskit $\to$ hardware\par
+  \vspace{2em}}}
+\caption{Dependency structure of \texttt{quantumviz}.
+         Solid boxes denote mandatory dependencies; dashed borders denote
+         optional extras.}
+\label{fig:depgraph}
+\end{figure}
+
+% ============================================================
+\section{Visualization Modalities}
+\label{sec:modalities}
+% ============================================================
+
+\subsection{Bloch Sphere}
+
+The Bloch sphere is the standard geometric representation of a pure
+single-qubit state $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$,
+parameterized by the polar angle $\theta$ and azimuthal angle $\varphi$ as
+\begin{equation}
+  \ket{\psi}
+  \;=\;
+  \cos\!\frac{\theta}{2}\,\ket{0}
+  \;+\;
+  e^{i\varphi}\sin\!\frac{\theta}{2}\,\ket{1}.
+  \label{eq:bloch_state}
+\end{equation}
+Mixed states are represented as points strictly inside the unit sphere, with
+the Bloch vector given by
+$\mathbf{r} = (\langle X\rangle,\langle Y\rangle,\langle Z\rangle)
+ = \operatorname{Tr}(\boldsymbol{\sigma}\rho)$
+for density matrix $\rho$.
+The \texttt{bloch.py} module renders a three-dimensional spherical surface
+using Matplotlib's \texttt{Axes3D}, overlays the state vector as an arrow,
+and optionally annotates the north ($\ket{0}$) and south ($\ket{1}$) poles.
+
+The input file parser supports three notations:
+\begin{itemize}
+  \item Ket notation, e.g.\ \lstinline{|0>}, \lstinline{|1>},
+        \lstinline{|+>}, \lstinline{|->}
+  \item Bloch angles, e.g.\ \lstinline{theta=60 deg, phi=45}
+  \item Cartesian Bloch vector, e.g.\ \lstinline{(x,y,z)}
+\end{itemize}
+
+\noindent Example Python usage:
+\begin{lstlisting}
+from quantumviz import plot_bloch_sphere
+
+plot_bloch_sphere('state.txt', 'bloch.png')
+\end{lstlisting}
+
+\noindent Equivalent CLI invocation:
+\begin{lstlisting}
+quantumviz bloch-sphere state.txt -o bloch.png
+\end{lstlisting}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.45\linewidth}{\centering\vspace{4em}
+  [Bloch sphere figure]\par
+  State: $\ket{+} = (\ket{0}+\ket{1})/\sqrt{2}$
+  \vspace{4em}}}
+\caption{Bloch sphere visualization of the state
+         $\ket{+} = (\ket{0}+\ket{1})/\!\sqrt{2}$,
+         generated by \texttt{quantumviz} from a single-line input file.}
+\label{fig:bloch}
+\end{figure}
+
+\subsection{State City}
+
+The State City plot visualizes the density matrix $\rho$ of a multi-qubit
+system as a three-dimensional bar chart in which each bar represents the
+absolute value of one matrix element $|\rho_{ij}|$.
+The height of bar $(i,j)$ encodes the magnitude of the coherence or
+population, while a color map encodes the complex argument
+$\arg(\rho_{ij})$.
+
+The \texttt{state\_city} module accepts either a raw state vector (from which
+it computes $\rho = \ket{\psi}\!\bra{\psi}$) or a JSON file containing an
+explicit \texttt{stages} array, allowing visualization of the density matrix
+at multiple stages of a quantum circuit:
+
+\begin{lstlisting}
+{
+  "qubits": 2,
+  "stages": [
+    {"name": "After H gate", "state_vector": [0.707, 0, 0, 0.707]}
+  ]
+}
+\end{lstlisting}
+
+For an $n$-qubit system the density matrix $\rho$ is a $2^n \times 2^n$
+matrix.
+The 3D rendering scales well for up to $n = 4$ qubits (256 bars) before the
+figure becomes visually crowded; for larger systems the user is advised to
+inspect reduced density matrices or to use the Hinton representation
+available as a future extension.
+
+\subsection{Cost Landscape}
+
+Variational quantum algorithms optimize a cost function $\mathcal{C}(\boldsymbol{\theta})$
+over a set of circuit parameters $\boldsymbol{\theta}$.
+Understanding the geometry of this landscape---in particular the presence of
+barren plateaus, local minima, and saddle points---is essential for
+diagnosing optimizer behavior.
+\texttt{quantumviz} supports two problem types for two-parameter landscapes:
+
+\begin{itemize}
+  \item \textbf{QAOA for MaxCut.}
+    Given a graph $G = (V, E)$ specified as an edge list, the module computes
+    the expectation value $\langle \mathcal{C}\rangle(\gamma,\beta)$ of the
+    MaxCut cost operator
+    $\mathcal{C} = \sum_{(u,v)\in E}\frac{I - Z_u Z_v}{2}$
+    over a single-layer QAOA ansatz as a function of parameters
+    $\gamma \in [0,\pi]$ and $\beta \in [0,\pi/2]$.
+
+  \item \textbf{VQE energy surface.}
+    Given a molecular Hamiltonian expressed as a linear combination of Pauli
+    terms $H = \sum_k c_k P_k$ (with $P_k$ a tensor product of single-qubit
+    Pauli operators), the module computes
+    $\langle H\rangle(\theta_1,\theta_2)$ over a two-parameter parameterized
+    state and renders the result as a filled contour plot.
+\end{itemize}
+
+Input for the QAOA variant is a JSON file of the form:
+\begin{lstlisting}
+{"edges": [[0, 1], [1, 2], [0, 2]]}
+\end{lstlisting}
+
+Input for the VQE variant follows the Pauli term format:
+\begin{lstlisting}
+{"terms": [{"coeff": -1.0, "paulis": []},
+           {"coeff":  0.5, "paulis": ["Z"]}]}
+\end{lstlisting}
+
+Both produce a Matplotlib figure with labeled axes and a color bar indicating
+the energy scale.
+Example files for the triangle MaxCut graph, the H$_2$ molecule, and the LiH
+molecule Hamiltonian are included in the \texttt{examples/} directory.
+
+\subsection{Circuit Diagrams}
+
+\texttt{quantumviz} renders quantum circuits specified as JSON into PNG
+images.
+The JSON schema follows a simple gate-list model: each circuit object contains
+a \texttt{qubits} count and an ordered list of stages, where each stage
+carries a gate label and a list of target qubit indices.
+The renderer uses Matplotlib's text and patch primitives to draw wires, gate
+boxes, controlled-NOT symbols, and measurement boxes.
+
+The circuit module is intentionally lightweight---it does not perform
+simulation---and is designed to be used alongside Qiskit or another simulator
+rather than to replace it.
+Its primary purpose is to produce readable diagrams for figures and the web
+dashboard.
+
+\subsection{Dynamic Flow}
+
+The dynamic flow module visualizes temporal evolution of a quantum state.
+It accepts the same multi-stage JSON schema as State City and renders a
+sequence of Bloch sphere snapshots (or an animated GIF if the
+\texttt{animate} flag is set) showing how the Bloch vector moves under the
+specified sequence of operations.
+
+A dedicated Rabi oscillation renderer is also provided.
+Given a coupling strength $\Omega$ and a detuning $\Delta$, it computes the
+occupation probability
+\begin{equation}
+  P_0(t) = \cos^2\!\left(\frac{\Omega_\mathrm{eff}\, t}{2}\right),
+  \qquad
+  \Omega_\mathrm{eff} = \sqrt{\Omega^2 + \Delta^2},
+  \label{eq:rabi}
+\end{equation}
+and plots this as a function of time alongside the trajectory on the Bloch
+sphere.
+
+% ============================================================
+\section{Interactive Dashboard and Hardware Integration}
+\label{sec:dashboard}
+% ============================================================
+
+\subsection{Web Dashboard}
+
+The optional \texttt{dashboard} extra provides a browser-based interface built
+on FastAPI and served by Uvicorn.
+It can be launched with:
+\begin{lstlisting}
+quantumviz serve
+\end{lstlisting}
+or equivalently via the Python API:
+\begin{lstlisting}
+from quantumviz.dashboard import start_server
+start_server(host='0.0.0.0', port=8000)
+\end{lstlisting}
+
+The dashboard exposes a REST API at \texttt{/api/v1/} with endpoints for each
+visualization type.
+Users can upload state vectors or circuit definitions via a web form and
+receive rendered figures in real time.
+The interface is implemented using vanilla HTML, CSS, and JavaScript with no
+front-end build step required.
+This makes it easy to embed the dashboard in a Jupyter-adjacent workflow or to
+host it as a classroom tool.
+
+\subsection{IBM Quantum Hardware Integration}
+
+When installed with the \texttt{all} extra
+(\texttt{pip install quantumviz[all]}), the hardware module provides a thin
+wrapper around the Qiskit Runtime that allows users to submit a circuit JSON
+to IBM Quantum hardware and retrieve the resulting shot-level counts for
+subsequent visualization.
+Authentication is handled via the standard IBM Quantum token mechanism.
+This integration is deliberately minimal: \texttt{quantumviz} performs no
+hardware-specific optimization and makes no assumptions about the target
+device topology.
+
+% ============================================================
+\section{Example Applications}
+\label{sec:examples}
+% ============================================================
+
+\subsection{MaxCut Landscape for a Triangle Graph}
+
+As a first example, we reproduce the canonical single-layer QAOA cost
+landscape for the triangle graph $K_3$ with three qubits.
+Using the input file \texttt{examples/qaoa\_maxcut\_triangle.json}, which
+encodes the edge set $\{(0,1),(1,2),(0,2)\}$, we generate the landscape with:
+\begin{lstlisting}
+quantumviz cost-landscape qaoa \
+    examples/qaoa_maxcut_triangle.json -o triangle.png
+\end{lstlisting}
+
+The resulting figure shows the characteristic sinusoidal structure of the
+single-layer QAOA landscape, with the maximum expectation value
+$\langle \mathcal{C}\rangle \approx 2.5$ achieved at the known optimal angles
+$(\gamma^*,\beta^*) \approx (\pi/4, \pi/8)$.
+This serves as a basic sanity check for any QAOA implementation.
+
+\subsection{H$_2$ VQE Energy Surface}
+
+The file \texttt{examples/vqe\_h2.json} encodes the hydrogen molecule
+Hamiltonian at a fixed bond length in the STO-3G basis as a sum of five
+Pauli terms.
+The two-parameter energy surface generated by \texttt{quantumviz} reveals a
+smooth landscape with a single global minimum near the Hartree--Fock energy,
+confirming that a gradient-based optimizer would converge reliably from a
+broad initialization region.
+
+\subsection{Bell State Density Matrix}
+
+The Bell state
+$\ket{\Phi^+} = \bigl(\ket{00} + \ket{11}\bigr)/\!\sqrt{2}$
+has a density matrix with four non-zero elements:
+$\rho_{00} = \rho_{11} = \rho_{03} = \rho_{30} = 0.5$.
+The State City plot of this state provides a clear visual illustration of
+maximal quantum entanglement, with two towers of equal height on the diagonal
+and two off-diagonal coherence towers of the same magnitude.
+The plot is generated with:
+\begin{lstlisting}
+from quantumviz import plot_state_city
+import numpy as np
+
+bell = [1/np.sqrt(2), 0, 0, 1/np.sqrt(2)]
+plot_state_city(bell, r"Bell state $|\Phi^+\rangle$", "bell.png")
+\end{lstlisting}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.55\linewidth}{\centering\vspace{4em}
+  [State City figure for $\ket{\Phi^+}$]\par
+  \vspace{4em}}}
+\caption{State City visualization of the Bell state $\ket{\Phi^+}$.
+         Bar heights encode $|\rho_{ij}|$ and bar colors encode
+         $\arg(\rho_{ij})$.}
+\label{fig:statecity}
+\end{figure}
+
+\subsection{Rabi Oscillations}
+
+The dynamic flow module's Rabi renderer is demonstrated by setting a coupling
+strength $\Omega = 2\pi \times 10$~MHz and zero detuning $\Delta = 0$,
+yielding on-resonance oscillations between $\ket{0}$ and $\ket{1}$ with
+period $T = 1/\Omega$.
+The resulting time-series plot provides an immediate visual verification of
+the correct Rabi frequency in a simulated or experimental dataset.
+
+% ============================================================
+\section{Installation and Testing}
+\label{sec:installation}
+% ============================================================
+
+\subsection{Installation}
+
+\texttt{quantumviz} requires Python~$\geq 3.9$.
+The core package is installed via \texttt{pip}:
+\begin{lstlisting}
+pip install quantumviz
+\end{lstlisting}
+
+The optional dashboard and hardware extras are available as:
+\begin{lstlisting}
+pip install quantumviz[dashboard]   # FastAPI, Uvicorn, Pydantic
+pip install quantumviz[all]         # all optional dependencies
+\end{lstlisting}
+
+For development, the repository should be cloned and installed in editable
+mode:
+\begin{lstlisting}
+git clone https://github.com/QuantumVisualization/quantumviz.git
+cd quantumviz
+pip install -e ".[dev,all]"
+\end{lstlisting}
+
+The \texttt{pyproject.toml} build file uses the standard PEP~517/518 build
+system and is compatible with both \texttt{pip} and \texttt{build}.
+
+\subsection{Testing}
+
+The test suite is located in \texttt{tests/} and is invoked with:
+\begin{lstlisting}
+pytest
+pytest --cov=quantumviz --cov-report=html   # with coverage report
+\end{lstlisting}
+
+Tests are organized by module and cover:
+\begin{itemize}
+  \item Input parsing for all supported file formats.
+  \item Correctness of the density-matrix conversion utility against
+        analytical results.
+  \item Correct extrema of the QAOA landscape for the triangle graph.
+  \item Smoke-test rendering (verifying that no exceptions are raised and
+        that output files are produced with non-zero size) for all six
+        visualization types.
+\end{itemize}
+
+Code quality is maintained through Ruff (linting) and Mypy (type checking),
+both configured in \texttt{pyproject.toml} and enforced by a GitHub Actions
+CI workflow (\texttt{.github/workflows/}).
+
+\subsection{Documentation}
+
+User-facing documentation is hosted in the \texttt{docs/} directory in
+Markdown format and covers installation, all CLI subcommands, Python API
+reference, and the JSON input schemas.
+Extended usage examples are provided in the \texttt{examples/} directory:
+\begin{itemize}
+  \item \texttt{examples/qaoa\_maxcut\_2qubit.json} --- two-qubit MaxCut
+  \item \texttt{examples/qaoa\_maxcut\_triangle.json} --- triangle MaxCut
+  \item \texttt{examples/vqe\_h2.json} --- hydrogen molecule
+  \item \texttt{examples/vqe\_lih.json} --- lithium hydride molecule
+\end{itemize}
+
+% ============================================================
+\section{Conclusions and Outlook}
+\label{sec:conclusions}
+% ============================================================
+
+We have presented \texttt{quantumviz}, a Python library providing a unified
+interface for the visualization of quantum algorithm states, density matrices,
+cost landscapes, circuit diagrams, and time evolution.
+The library is designed to be lightweight, composable, and accessible via
+both a Python API and a CLI, with an optional web dashboard for interactive
+use.
+It addresses a genuine gap in the existing quantum software ecosystem by
+combining multiple visualization modalities under a single, consistently
+designed interface.
+
+Several extensions are planned for future releases:
+\begin{itemize}
+  \item Multi-qubit Bloch sphere trajectories, showing the reduced Bloch
+        vector of individual qubits evolving within a larger entangled system.
+  \item Wigner function rendering for continuous-variable and bosonic system
+        states.
+  \item Animated GIF and MP4 export for all time-dependent visualizations.
+  \item A Hinton diagram alternative to State City for high-dimensional
+        density matrices.
+  \item Native integration with PennyLane datasets and Cirq circuits.
+\end{itemize}
+
+The source code is available at
+\url{https://github.com/QuantumVisualization/quantumviz} under the MIT
+license.
+Contributions, bug reports, and feature requests are welcome via the
+repository issue tracker.
+
+
+\section{A Section}
+Use sections to structure your article's presentation.
+
+Equations should be centered; multi-line equations should be aligned.
+\begin{equation}
+H = \sum_{j=1}^N \left[J (S^x_j S^x_{j+1} + S^y_j S^y_{j+1} + \Delta S^z_j S^z_{j+1}) - h S^z_j \right].
+\end{equation}
+
+In the list of references, cited papers \cite{1931_Bethe_ZP_71} should include authors, title, journal reference (journal name, volume number (in bold), start page) and most importantly a DOI link. For a preprint \cite{arXiv:1108.2700}, please include authors, title (please ensure proper capitalization) and arXiv link. If you use BiBTeX with our style file, the right format will be automatically implemented.
+
+All equations and references should be hyperlinked to ensure ease of navigation. This also holds for [sub]sections: readers should be able to easily jump to Section \ref{sec:another}.
+
+\section{Another Section}
+\label{sec:another}
+There is no strict length limitation, but the authors are strongly encouraged to keep contents to the strict minimum necessary for peers to reproduce the research described in the paper.
+
+\subsection{A first subsection}
+You are free to use dividers as you see fit.
+\subsection{A note about figures}
+Figures should only occupy the stricly necessary space, in any case individually fitting on a single page. Each figure item should be appropriately labeled and accompanied by a descriptive caption. {\bf SciPost does not accept creative or promotional figures or artist's impressions}; on the other hand, technical drawings and scientifically accurate representations are encouraged.
+
+
+\section{Conclusion}
+You must include a conclusion.
+
+\section*{Acknowledgements}
+Acknowledgements should follow immediately after the conclusion.
+
+% TODO: include author contributions
+\paragraph{Author contributions}
+This is optional. If desired, contributions should be succinctly described in a single short paragraph, using author initials.
+
+% TODO: include funding information
+\paragraph{Funding information}
+Authors are required to provide funding information, including relevant agencies and grant numbers with linked author's initials. Correctly-provided data will be linked to funders listed in the \href{https://www.crossref.org/services/funder-registry/}{\sf Fundref registry}.
+
+
+\begin{appendix}
+\numberwithin{equation}{section}
+
+\section{First appendix}
+Add material which is better left outside the main text in a series of Appendices labeled by capital letters.
+
+\section{About references}
+Your references should start with the comma-separated author list (initials + last name), the publication title in italics, the journal reference with volume in bold, start page number, publication year in parenthesis, completed by the DOI link (linking must be implemented before publication). If using BiBTeX, please use the style files provided  on \url{https://scipost.org/submissions/author_guidelines}. If you are using our LaTeX template, simply add
+\begin{verbatim}
+\bibliography{your_bibtex_file}
+\end{verbatim}
+at the end of your document. If you are not using our LaTeX template, please still use our bibstyle as
+\begin{verbatim}
+\bibliographystyle{SciPost_bibstyle}
+\end{verbatim}
+in order to simplify the production of your paper.
+\end{appendix}
+
+
+%%%%%%%%% END TODO: CONTENTS
+
+
+%%%%%%%%%% TODO: BIBLIOGRAPHY
+% Provide your bibliography here. You have two options:
+
+%%% FIRST OPTION
+% Write your entries here directly, following the example below, including:
+% Author(s), Title, Journal Ref. with year in parentheses at the end, followed by the DOI number.
+
+%\begin{thebibliography}{99}
+%\bibitem{1931_Bethe_ZP_71} H. A. Bethe, {\it Zur Theorie der Metalle. i. Eigenwerte und Eigenfunktionen der linearen Atomkette}, Zeit. f{\"u}r Phys. {\bf 71}, 205 (1931), \doi{10.1007\%2FBF01341708}.
+%\bibitem{arXiv:1108.2700} P. Ginsparg, {\it It was twenty years ago today... }, \url{http://arxiv.org/abs/1108.2700}.
+%\end{thebibliography}
+
+%%% SECOND OPTION
+% Use your bibtex library, formatted by the SciPost style file.
+\bibliography{main.bib}
+
+%%%%%%%%%% END TODO: BIBLIOGRAPHY
+
+
+\end{document}
