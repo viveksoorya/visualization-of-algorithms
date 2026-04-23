@@ -1,12 +1,12 @@
 INFO:  latexindent version 3.20.1, 2023-01-07, a script to indent .tex files
        latexindent lives here: /usr/share/texlive/texmf-dist/scripts/latexindent/
-       Sun Mar 22 10:53:10 2026
-       Filename: /home/uni/visualization-of-algorithms/paper/main.tex
+       Fri Apr 17 15:53:57 2026
+       Filename: /home/uni/visualization/implementation-of-visualization/paper/library-paper.tex
 INFO:  Processing switches:
        -s|--silent: Silent mode active (you have used either -s or --silent)
        -w|--overwrite: Overwrite mode active, will make a back up before overwriting
 INFO:  Directory for backup files and indent.log:
-       /home/uni/visualization-of-algorithms/paper
+       /home/uni/visualization/implementation-of-visualization/paper
 INFO:  YAML settings read: defaultSettings.yaml
        Reading defaultSettings.yaml from /usr/share/texlive/texmf-dist/scripts/latexindent/defaultSettings.yaml
 INFO:  YAML reading settings
@@ -14,15 +14,90 @@ INFO:  YAML reading settings
        latexindent.pl didn't find indentconfig.yaml or .indentconfig.yaml
        see all possible locations: https://latexindentpl.readthedocs.io/en/latest/sec-appendices.html#indentconfig-options)
 INFO:  Backup procedure (-w flag active):
-       copying /home/uni/visualization-of-algorithms/paper/main.tex to /home/uni/visualization-of-algorithms/paper/main.bak0
-       Backup file: /home/uni/visualization-of-algorithms/paper/main.bak0
-       /home/uni/visualization-of-algorithms/paper/main.tex will be overwritten after indentation
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak0 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak1 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak2 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak3 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak4 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak5 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak6 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak7 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak8 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak9 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak10 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak11 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak12 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak13 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak14 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak15 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak16 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak17 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak18 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak19 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak20 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak21 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak22 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak23 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak24 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak25 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak26 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak27 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak28 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak29 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak30 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak31 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak32 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak33 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak34 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak35 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak36 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak37 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak38 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak39 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak40 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak41 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak42 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak43 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak44 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak45 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak46 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak47 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak48 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak49 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak50 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak51 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak52 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak53 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak54 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak55 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak56 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak57 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak58 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak59 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak60 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak61 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak62 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak63 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak64 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak65 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak66 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak67 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak68 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak69 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak70 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak71 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak72 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak73 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak74 already exists, incrementing by 1... (see maxNumberOfBackUps and onlyOneBackUp)
+       copying /home/uni/visualization/implementation-of-visualization/paper/library-paper.tex to /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak75
+       Backup file: /home/uni/visualization/implementation-of-visualization/paper/library-paper.bak75
+       /home/uni/visualization/implementation-of-visualization/paper/library-paper.tex will be overwritten after indentation
 INFO:  Phase 1: searching for objects
 INFO:  Phase 2: finding surrounding indentation
 INFO:  Phase 3: indenting objects
 INFO:  Phase 4: final indentation check
 INFO:  Output routine:
-       Overwriting file /home/uni/visualization-of-algorithms/paper/main.tex
+       Overwriting file /home/uni/visualization/implementation-of-visualization/paper/library-paper.tex
        --------------
 INFO:  Please direct all communication/issues to:
         https://github.com/cmhughes/latexindent.pl

@@ -1,0 +1,605 @@
+\documentclass{SciPost}
+
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\title{\textbf{Visualization of Quantum Algorithms:}\\
+\textbf{A Comparative Study of Visualization Styles}\\
+\textbf{for Different Algorithm Families}}
+
+\author{
+    Research Project Report\\
+    \ Department of Quantum Computing\\
+    \ Visualization of Algorithms Project
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	Quantum algorithm visualization is essential for understanding the behavior and properties of quantum computations. Different algorithm families exhibit distinct characteristics that may be more effectively visualized through specific visualization approaches. This research investigates the hypothesis that \textbf{certain visualization styles are optimal for specific quantum algorithm families}. We conducted empirical testing across four algorithm families: Oracle-based (Grover's Search, Deutsch-Jozsa), Transform-based (QFT, QPE), Variational (QAOA, VQE), and Simulation-based (Rabi Oscillation, Ising Model). Five visualization techniques were evaluated: Bloch Sphere, State City (density matrix), Circuit Diagrams, Cost Landscapes, and Dynamic Flow trajectories. Our findings confirm the hypothesis: Oracle-based algorithms are best visualized with Bloch Sphere + State City, Transform-based algorithms with State City, Variational algorithms with Circuit Diagrams + Cost Landscapes, and Simulation-based algorithms with Dynamic Flow + Bloch trajectories. This research provides guidelines for researchers and practitioners in selecting appropriate visualization techniques for different quantum algorithm analysis tasks.
+
+	\bigskip
+	\textbf{Keywords:} Quantum Computing, Algorithm Visualization, Bloch Sphere, Density Matrix, Quantum Circuit, Comparative Analysis
+\end{abstract}
+
+\newpage
+
+\section{Introduction}
+
+Quantum computing represents a paradigm shift in computational methodology, leveraging quantum mechanical phenomena such as superposition, entanglement, and interference to solve problems that remain intractable for classical computers. As quantum hardware matures and quantum algorithms become increasingly sophisticated, the need for effective visualization techniques becomes paramount. Understanding the behavior, properties, and dynamics of quantum algorithms requires tools that can represent complex quantum states and operations in intuitive and interpretable formats.
+
+The field of quantum algorithm visualization has seen various approaches, ranging from geometric representations like the Bloch sphere to algebraic representations like density matrices and circuit diagrams. However, the question of which visualization technique is most appropriate for which type of quantum algorithm remains largely unexplored. This research addresses this fundamental question by empirically testing the hypothesis that \textbf{certain visualization styles are optimal for specific quantum algorithm families}.
+
+\subsection{Research Objectives}
+
+The primary objectives of this research are:
+
+\begin{enumerate}
+	\item To test the hypothesis that algorithm-specific visualization techniques provide superior insight compared to generic approaches
+	\item To identify which visualization techniques reveal unique properties of different algorithm families
+	\item To evaluate the scalability of various visualization techniques with increasing qubit counts
+	\item To provide practical guidelines for researchers selecting visualization approaches for quantum algorithm analysis
+\end{enumerate}
+
+\subsection{Research Hypothesis}
+
+Based on theoretical analysis of quantum algorithm properties and visualization capabilities, we hypothesize:
+
+\begin{itemize}
+	\item \textbf{Oracle-based algorithms} benefit from geometric (Bloch sphere) and algebraic (amplitude bars) visualizations because they exhibit rotational dynamics toward target states
+	\item \textbf{Transform-based algorithms} are best visualized algebraically because phase periodicity in frequency domains is their key feature
+	\item \textbf{Variational algorithms} require graph-based (circuit diagrams) and geometric (cost landscapes) representations due to parameter optimization landscapes
+	\item \textbf{Simulation-based algorithms} need dynamic flow and trajectory visualizations because they evolve over time under Hamiltonian dynamics
+\end{itemize}
+
+\newpage
+
+\section{Background and Related Work}
+
+\subsection{Quantum State Representations}
+
+Quantum states in an $n$-qubit system exist in a $2^n$-dimensional Hilbert space. A pure state $|\psi\rangle$ can be represented as:
+
+\begin{equation}
+	|\psi\rangle = \sum_{i=0}^{2^n-1} \alpha_i |i\rangle, \quad \sum_{i=0}^{2^n-1} |\alpha_i|^2 = 1
+\end{equation}
+
+where $\alpha_i$ are complex amplitudes and $|i\rangle$ are basis states. This representation can be visualized through multiple techniques, each emphasizing different aspects of the quantum state.
+
+\subsection{Visualization Techniques}
+
+\subsubsection{Bloch Sphere}
+The Bloch sphere represents a single qubit state as a point on the unit sphere in $\mathbb{R}^3$:
+
+\begin{equation}
+	|\psi\rangle = \cos\frac{\theta}{2}|0\rangle + e^{i\phi}\sin\frac{\theta}{2}|1\rangle
+\end{equation}
+
+The Bloch vector $\vec{r} = (x, y, z)$ is computed from the density matrix $\rho = |\psi\rangle\langle\psi|$:
+
+\begin{equation}
+	x = \text{Tr}(\rho\sigma_x), \quad y = \text{Tr}(\rho\sigma_y), \quad z = \text{Tr}(\rho\sigma_z)
+\end{equation}
+
+\subsubsection{Density Matrix (State City)}
+The density matrix representation $\rho = |\psi\rangle\langle\psi|$ provides a complete description of quantum states. For an $n$-qubit system, this is a $2^n \times 2^n$ matrix where:
+
+\begin{itemize}
+	\item Diagonal elements $|\alpha_i|^2$ represent probabilities
+	\item Off-diagonal elements $\alpha_i\alpha_j^*$ represent coherences between basis states
+\end{itemize}
+
+\subsubsection{Quantum Circuit Diagrams}
+Circuit diagrams represent quantum operations as a sequence of gates applied to qubits, showing the structural and computational flow of quantum algorithms.
+
+\subsubsection{Cost and Energy Landscapes}
+For variational algorithms, cost/energy landscapes visualize the objective function as a function of parameters, revealing optimization trajectories and local/global minima.
+
+\subsection{Algorithm Families}
+
+Quantum algorithms can be categorized into families based on their underlying structure and purpose:
+
+\begin{itemize}
+	\item \textbf{Oracle-based:} Amplitude amplification through interference (Grover's, Deutsch-Jozsa)
+	\item \textbf{Transform-based:} Signal processing in quantum Fourier domains (QFT, QPE)
+	\item \textbf{Variational:} Hybrid quantum-classical optimization (QAOA, VQE)
+	\item \textbf{Simulation-based:} Hamiltonian dynamics emulation (Rabi oscillation, Ising model)
+\end{itemize}
+
+\newpage
+
+\section{Methodology}
+
+\subsection{Experimental Design}
+
+Our methodology involved systematic testing of visualization techniques across multiple algorithms within each family. For each algorithm, we applied all relevant visualization techniques and evaluated their effectiveness in revealing key algorithm properties.
+
+\subsection{Visualization Tools Implemented}
+
+Five visualization tools were implemented in Python using NumPy and Matplotlib:
+
+\begin{enumerate}
+	\item \textbf{Bloch Sphere Visualizer}: Renders single-qubit states on a 3D unit sphere
+	\item \textbf{State City Visualizer}: Displays density matrix elements as 3D bar charts
+	\item \textbf{Circuit Diagram Generator}: Produces quantum circuit schematics
+	\item \textbf{Cost Landscape Visualizer}: Plots parameter optimization surfaces
+	\item \textbf{Dynamic Flow Visualizer}: Shows state evolution trajectories over time
+\end{enumerate}
+
+\subsection{Algorithms Tested}
+
+Table \ref{tab:algorithms} summarizes the algorithms tested across different families.
+
+\begin{table}[h!]
+	\centering
+	\caption{Quantum Algorithms Tested in This Study}
+	\label{tab:algorithms}
+	\begin{tabular}{@{}llll@{}}
+		\toprule
+		\textbf{Family}  & \textbf{Algorithm} & \textbf{Qubits} & \textbf{Purpose}           \\ \midrule
+		Oracle-based     & Grover's Search    & 2, 3, 4         & Database search            \\
+		Oracle-based     & Deutsch-Jozsa      & 2               & Function balancing         \\
+		Transform-based  & QFT                & 2, 3, 4         & Fourier transformation     \\
+		Transform-based  & QPE                & 2               & Phase estimation           \\
+		Variational      & QAOA               & 2, 3            & Combinatorial optimization \\
+		Variational      & VQE                & 2, 3            & Ground state energy        \\
+		Simulation-based & Rabi Oscillation   & 1               & Time evolution             \\
+		Simulation-based & Ising Model        & 2               & Many-body physics          \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\subsection{Evaluation Criteria}
+
+Each visualization was evaluated on:
+
+\begin{itemize}
+	\item \textbf{Clarity}: How easily interpretable is the visualization?
+	\item \textbf{Insight Level}: Does it reveal key algorithm properties?
+	\item \textbf{Scalability}: How does it perform with increasing qubit counts?
+	\item \textbf{Unique Value}: Does it provide information unavailable elsewhere?
+\end{itemize}
+
+\newpage
+
+\section{Results}
+
+\subsection{Oracle-Based Algorithms}
+
+Oracle-based algorithms use quantum oracles to mark solution states and employ amplitude amplification to increase their probabilities.
+
+\subsubsection{Grover's Search Algorithm}
+
+Grover's search demonstrates quadratic speedup for unstructured database search. The algorithm consists of:
+\begin{enumerate}
+	\item Initialize qubits to $|0\rangle^{\otimes n}$
+	\item Apply Hadamard gates for uniform superposition
+	\item Repeat $O(\sqrt{N})$ times:
+	      \begin{itemize}
+		      \item Oracle: Phase flip on target state
+		      \item Diffusion: Amplitude amplification
+	      \end{itemize}
+	\item Measure to obtain solution
+\end{enumerate}
+
+Figure \ref{fig:grover_comparison} shows the visualization comparison for Grover's algorithm.
+
+\begin{figure}[h!]
+	\centering
+	\subcaptionbox{Bloch sphere}{\label{fig:grover_bloch}%
+		{\includegraphics[width=0.18\textwidth]{figures/panels/grover_bloch.png}}}
+	\hfill
+	\subcaptionbox{State City}{\label{fig:grover_statecity}%
+		{\includegraphics[width=0.18\textwidth]{figures/panels/grover_statecity.png}}}
+	\hfill
+	\subcaptionbox{Circuit diagram}{\label{fig:grover_circuit}%
+		{\includegraphics[width=0.18\textwidth]{figures/panels/grover_circuit.png}}}
+	\hfill
+	\subcaptionbox{Probabilities}{\label{fig:grover_probs}%
+		{\includegraphics[width=0.18\textwidth]{figures/panels/grover_probs.png}}}
+	\hfill
+	\subcaptionbox{Cost landscape}{\label{fig:grover_cost}%
+		{\includegraphics[width=0.18\textwidth]{figures/panels/grover_cost.png}}}
+	\caption{Comparison of visualization techniques for Grover's search algorithm with $n=2$ qubits:
+		(a) Bloch sphere showing geometric rotation of state vector from initial superposition
+		toward target state $|11\rangle$ after two iterations;
+		(b) State City density matrix revealing probability amplification from 0.25 to 1.0;
+		(c) Quantum circuit diagram showing Oracle and Diffusion operators;
+		(d) Bar chart of measurement probabilities after optimal iteration;
+		(e) Cost landscape demonstrating global optimum at target state.}
+	\label{fig:grover_comparison}
+\end{figure}
+
+\textbf{Key Findings:}
+
+\begin{itemize}
+	\item \textbf{Bloch Sphere} reveals the geometric rotation: the state vector rotates from the equator toward the target state $|11\rangle$
+	\item \textbf{State City} quantifies probability: success probability increases from 0.25 to 1.0 across iterations
+	\item \textbf{Circuit Diagram} shows structural elements: Oracle and Diffusion operators are clearly visible
+\end{itemize}
+
+\begin{table}[h!]
+	\centering
+	\caption{Visualization Effectiveness for Grover's Search}
+	\label{tab:grover_visualization}
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		\textbf{Visualization} & \textbf{Insight Level} & \textbf{Unique Value}        \\ \midrule
+		Bloch Sphere           & High                   & Geometric rotation mechanism \\
+		State City             & Medium                 & Probability quantification   \\
+		Circuit Diagram        & High                   & Structural understanding     \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\subsubsection{Deutsch-Jozsa Algorithm}
+
+The Deutsch-Jozsa algorithm determines whether a function is constant or balanced with a single query.
+
+\textbf{Key Findings:}
+
+\begin{itemize}
+	\item \textbf{Bloch Sphere}: Final state returns to $|0\rangle$ for constant oracle
+	\item \textbf{State City}: Shows deterministic collapse to $|00\rangle$
+	\item Both visualizations effectively demonstrate the algorithm's quantum advantage
+\end{itemize}
+
+\subsection{Transform-Based Algorithms}
+
+Transform-based algorithms operate by transforming quantum states into different bases, particularly the Fourier basis.
+
+\subsubsection{Quantum Fourier Transform (QFT)}
+
+The QFT transforms basis states according to:
+
+\begin{equation}
+	|j\rangle \rightarrow \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1} e^{2\pi ijk/N} |k\rangle
+\end{equation}
+
+Figure \ref{fig:qft_comparison} shows the visualization comparison.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subcaptionbox}{\label{fig:qft_bloch}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qft_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:qft_statecity}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qft_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:qft_circuit}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qft_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:qft_cost}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qft_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\caption{Comparison of visualization techniques for Quantum Fourier Transform:
+		(a) Bloch sphere captures only single-qubit phase $\phi$, failing to represent multi-qubit phase relationships;
+		(b) State City density matrix reveals periodic phase patterns in imaginary components;
+		(c) Circuit diagram showing characteristic butterfly pattern of QFT;
+		(d) Cost landscape for QFT parameter optimization.}
+	\label{fig:qft_comparison}
+\end{figure}
+
+\textbf{Key Findings:}
+
+\begin{itemize}
+	\item \textbf{Bloch Sphere} fails for multi-qubit phase relationships (only shows single-qubit phase)
+	\item \textbf{State City} reveals periodic phase patterns in the imaginary part
+	\item State City is \textbf{essential} for understanding QFT behavior
+\end{itemize}
+
+\begin{table}[h!]
+	\centering
+	\caption{Visualization Effectiveness for QFT}
+	\label{tab:qft_visualization}
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		\textbf{Visualization} & \textbf{Insight Level} & \textbf{Unique Value}          \\ \midrule
+		Bloch Sphere           & Low                    & Cannot show multi-qubit phases \\
+		State City             & High                   & Phase periodicity visible      \\
+		Circuit Diagram        & High                   & Butterfly pattern visible      \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\subsection{Variational Algorithms}
+
+Variational algorithms combine quantum circuits with classical optimization to solve optimization problems.
+
+\subsubsection{QAOA (Quantum Approximate Optimization Algorithm)}
+
+QAOA solves combinatorial optimization problems by varying parameters $\gamma$ and $\beta$:
+
+\begin{equation}
+	|\psi(\gamma, \beta)\rangle = U(\beta) U(\gamma) |+\rangle^{\otimes n}
+\end{equation}
+
+Figure \ref{fig:qaoa_comparison} shows the visualization comparison.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subcaptionbox}{\label{fig:qaoa_bloch}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qaoa_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:qaoa_statecity}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qaoa_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:qaoa_circuit}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qaoa_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:qaoa_cost}}%
+		{\includegraphics[width=0.22\textwidth]{figures/qaoa_stages_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\caption{Comparison of visualization techniques for QAOA ($p=1$ layer):
+		(a) Bloch sphere provides limited insight for variational algorithms;
+		(b) State City showing solution probability improvement across $\gamma=0.5\rightarrow1.0$, $\beta=0.3\rightarrow0.8$;
+		(c) Circuit diagram revealing ansatz structure with problem Hamiltonian layer $U(\gamma)$ and mixer layer $U(\beta)$;
+		(d) Cost landscape showing optimization surface with global minimum near $(\gamma^*,\beta^*)$.}
+	\label{fig:qaoa_comparison}
+\end{figure}
+
+\textbf{Key Findings:}
+
+\begin{itemize}
+	\item \textbf{Bloch Sphere} provides limited value (doesn't show optimization)
+	\item \textbf{State City} shows solution probability improvement
+	\item \textbf{Cost Landscape} reveals the optimization surface with minima
+	\item \textbf{Circuit Diagram} shows ansatz structure (problem + mixer layers)
+\end{itemize}
+
+\begin{table}[h!]
+	\centering
+	\caption{Visualization Effectiveness for QAOA}
+	\label{tab:qaoa_visualization}
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		\textbf{Visualization} & \textbf{Insight Level} & \textbf{Unique Value}           \\ \midrule
+		Bloch Sphere           & Low                    & No parameter optimization shown \\
+		State City             & Medium                 & Solution quality visible        \\
+		Cost Landscape         & High                   & Optimization surface visible    \\
+		Circuit Diagram        & High                   & Ansatz structure visible        \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\subsubsection{VQE (Variational Quantum Eigensolver)}
+
+VQE finds ground state energies by minimizing the expectation value $E(\theta) = \langle\psi(\theta)|H|\psi(\theta)\rangle$.
+
+\textbf{Key Findings:}
+
+\begin{itemize}
+	\item \textbf{Energy Landscape} shows minimization trajectory toward ground state
+	\item State City demonstrates amplitude shift toward ground state basis states
+	\item Circuit Diagram reveals hardware-efficient ansatz structure
+\end{itemize}
+
+\subsection{Simulation-Based Algorithms}
+
+Simulation-based algorithms emulate quantum system dynamics under Hamiltonians.
+
+\subsubsection{Rabi Oscillation}
+
+Rabi oscillation demonstrates coherent population transfer between quantum states under resonant driving:
+
+\begin{equation}
+	|\psi(t)\rangle = \cos(\Omega t)|0\rangle - i\sin(\Omega t)|1\rangle
+\end{equation}
+
+Figure \ref{fig:simulation_comparison} shows the visualization comparison.
+
+\begin{figure}[h!]
+	\centering
+	\begin{subcaptionbox}{\label{fig:sim_bloch}}%
+		{\includegraphics[width=0.17\textwidth]{figures/rabi_trajectory_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:sim_flow}}%
+		{\includegraphics[width=0.17\textwidth]{figures/rabi_trajectory_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:sim_statecity}}%
+		{\includegraphics[width=0.17\textwidth]{figures/rabi_trajectory_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:sim_circuit}}%
+		{\includegraphics[width=0.17\textwidth]{figures/rabi_trajectory_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\hfill
+	\begin{subcaptionbox}{\label{fig:sim_zvstime}}%
+		{\includegraphics[width=0.17\textwidth]{figures/rabi_trajectory_combined.pdf}%
+			\phantomsubcaption}%
+	\end{subcaptionbox}
+	\caption{Comparison of visualization techniques for Rabi oscillation ($\Omega t$ range $0$ to $\pi$):
+		(a) Bloch sphere with trajectory showing coherent population oscillation on equatorial plane;
+		(b) Dynamic flow visualization at $t=0, 0.2, 0.5, 0.8, 1.0$ showing state evolution;
+		(c) State City demonstrating coherence building and entanglement between $|0\rangle$ and $|1\rangle$;
+		(d) Circuit diagram for Rabi oscillation;
+		(e) Z-component vs time showing $\pi$-pulse transfer.}
+	\label{fig:simulation_comparison}
+\end{figure}
+
+\textbf{Key Findings:}
+
+\begin{itemize}
+	\item \textbf{Bloch Sphere Trajectory} shows the state vector rotating on the sphere surface
+	\item \textbf{Dynamic Flow} reveals time evolution through multiple time points
+	\item Z vs Time plot quantifies the oscillation period
+\end{itemize}
+
+\begin{table}[h!]
+	\centering
+	\caption{Visualization Effectiveness for Rabi Oscillation}
+	\label{tab:rabi_visualization}
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		\textbf{Visualization} & \textbf{Insight Level} & \textbf{Unique Value}    \\ \midrule
+		Bloch Sphere           & High                   & Single-qubit trajectory  \\
+		State City             & Medium                 & Density matrix evolution \\
+		Dynamic Flow           & High                   & Time evolution steps     \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\subsection{Scalability Analysis}
+
+Scalability is critical for practical visualization. Table \ref{tab:scalability} summarizes how each visualization technique scales with qubit count.
+
+\begin{table}[h!]
+	\centering
+	\caption{Scalability of Visualization Techniques}
+	\label{tab:scalability}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\textbf{Visualization} & \textbf{2 qubits} & \textbf{3 qubits} & \textbf{4 qubits} & \textbf{5+ qubits} \\ \midrule
+		Bloch Sphere           & Excellent         & Excellent         & Excellent         & Excellent          \\
+		State City             & Excellent         & Good              & Challenging       & Impractical        \\
+		Cost Landscape         & Excellent         & Excellent         & Excellent         & Excellent          \\
+		Circuit Diagram        & Excellent         & Excellent         & Good              & Good               \\
+		Dynamic Flow           & Excellent         & Excellent         & Excellent         & Excellent          \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\textbf{Key Observation}: State City (density matrix) scales poorly due to exponential growth ($2^n \times 2^n$ matrix), limiting practical use to approximately 4 qubits.
+
+\newpage
+
+\section{Discussion}
+
+\subsection{Hypothesis Validation}
+
+Our results strongly support the hypothesis that certain visualization styles are optimal for specific algorithm families.
+
+\begin{enumerate}
+	\item \textbf{Oracle-based algorithms}: Confirmed. Bloch Sphere reveals the geometric rotation mechanism, while State City quantifies probability amplification. Circuit diagrams provide structural context.
+
+	\item \textbf{Transform-based algorithms}: Confirmed. State City is essential because it reveals phase periodicity in the density matrix imaginary part—information that Bloch Sphere cannot capture for multi-qubit systems.
+
+	\item \textbf{Variational algorithms}: Confirmed. Circuit diagrams show ansatz structure and parameter placement, while Cost Landscapes reveal the optimization landscape. Bloch Sphere provides minimal insight.
+
+	\item \textbf{Simulation-based algorithms}: Confirmed. Dynamic Flow and trajectory visualizations are essential for understanding Hamiltonian time evolution.
+\end{enumerate}
+
+\subsection{Visualization Selection Guidelines}
+
+Based on our findings, we provide the following guidelines:
+
+\begin{table}[h!]
+	\centering
+	\caption{Recommended Visualizations by Algorithm Family}
+	\label{tab:guidelines}
+	\begin{tabular}{@{}ll@{}}
+		\toprule
+		\textbf{Algorithm Family} & \textbf{Recommended Visualizations} \\ \midrule
+		Oracle-based              & Bloch Sphere + State City + Circuit \\
+		Transform-based           & State City + Circuit                \\
+		Variational               & Circuit + Cost Landscape            \\
+		Simulation-based          & Dynamic Flow + Bloch Trajectory     \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{figure}[h!]
+	\centering
+	\caption{Optimal visualization techniques for each quantum algorithm family:
+		(a) Bloch sphere captures geometric rotation in Oracle-based algorithms;
+		(b) State City reveals multi-qubit phase patterns in Transform-based algorithms;
+		(c) Cost landscape exposes optimization surfaces in Variational algorithms;
+		(d) Dynamic flow tracks Hamiltonian evolution in Simulation-based algorithms.}
+
+	\begin{tabular}{cccc}
+		\includegraphics[width=0.22\textwidth]{figures/miniatures/oracle_bloch.png}     &
+		\includegraphics[width=0.22\textwidth]{figures/miniatures/transform_state.png}  &
+		\includegraphics[width=0.22\textwidth]{figures/miniatures/variational_cost.png} &
+		\includegraphics[width=0.22\textwidth]{figures/miniatures/simulation_flow.png}                                                                                \\
+		\textbf{Oracle-based}                                                           & \textbf{Transform-based} & \textbf{Variational} & \textbf{Simulation-based}
+	\end{tabular}
+	\label{fig:guidelines_visual}
+\end{figure}
+
+\subsection{Trade-offs and Limitations}
+
+\begin{itemize}
+	\item \textbf{Bloch Sphere}: Limited to single-qubit states; cannot represent entanglement
+	\item \textbf{State City}: Excellent insight but impractical for 5+ qubits
+	\item \textbf{Cost Landscape}: Requires parameter sweep computation
+	\item \textbf{Dynamic Flow}: Static images; animation would improve understanding
+\end{itemize}
+
+\newpage
+
+\section{Conclusions}
+
+This research empirically validated the hypothesis that certain visualization styles are optimal for specific quantum algorithm families. Our key findings are:
+
+\begin{enumerate}
+	\item \textbf{Oracle-based algorithms} benefit from the combination of Bloch Sphere (geometric rotation) and State City (probability quantification), with Circuit diagrams providing structural context.
+
+	\item \textbf{Transform-based algorithms} require State City visualization to reveal phase periodicity that cannot be captured by Bloch Sphere for multi-qubit systems.
+
+	\item \textbf{Variational algorithms} need Circuit diagrams (for ansatz structure) and Cost Landscapes (for optimization understanding), as Bloch Sphere provides minimal insight.
+
+	\item \textbf{Simulation-based algorithms} are best understood through Dynamic Flow and trajectory visualizations showing time evolution.
+
+	\item \textbf{Scalability analysis} reveals that State City (density matrix) is practical only for up to 4 qubits, while Bloch Sphere, Circuit diagrams, and Dynamic Flow scale well.
+\end{enumerate}
+
+These findings provide practical guidance for researchers and practitioners in selecting appropriate visualization techniques for quantum algorithm analysis.
+
+\subsection{Future Work}
+
+\begin{itemize}
+	\item Develop hybrid visualizations combining multiple techniques
+	\item Implement interactive/animated visualizations
+	\item Extend testing to 10+ qubit systems with alternative density matrix representations
+	\item Apply these guidelines to real quantum hardware output visualization
+\end{itemize}
+
+\newpage
+
+\section*{Acknowledgments}
+
+This research was conducted as part of the Visualization of Algorithms project, exploring the intersection of quantum computing and visual analytics.
+
+\newpage
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+\begin{thebibliography}{99}
+
+	\item Quantum Algorithm Zoo. \url{https://quantumalgorithmzoo.org/}
+
+	\item Nielsen, M. A., \& Chuang, I. L. (2010). \textit{Quantum Computation and Quantum Information: 10th Anniversary Edition}. Cambridge University Press.
+
+	\item Preskill, J. (2018). Quantum Computing in the NISQ era and beyond. \textit{Quantum}, 2, 79.
+
+	\item Farhi, E., Goldstone, J., \& Gutmann, S. (2014). A Quantum Approximate Optimization Algorithm. \textit{arXiv:1411.4028}.
+
+	\item Peruzzo, A., McClean, J., Shadbolt, P., et al. (2014). A variational eigenvalue solver on a photonic quantum processor. \textit{Nature Communications}, 5, 4213.
+
+	\item Grover, L. K. (1996). A fast quantum mechanical algorithm for database search. \textit{Proceedings of the 28th ACM STOC}, 212-219.
+
+	\item Deutsch, D., \& Jozsa, R. (1992). Rapid solution of problems by quantum computation. \textit{Proceedings of the Royal Society of London A}, 439, 553-558.
+
+\end{thebibliography}
+
+\end{document}
