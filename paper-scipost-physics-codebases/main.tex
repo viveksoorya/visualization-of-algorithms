@@ -261,17 +261,17 @@ interactive frontend---all accessible through a single \texttt{pip install}.
 (\texttt{src/quantumviz/}) with the following module layout:
 
 \begin{lstlisting}
-src/quantumviz/
-├── __init__.py          # public API surface
-├── bloch.py             # Bloch sphere renderer
-├── state_city.py        # density matrix 3-D bar chart
-├── cost_landscape.py    # QAOA / VQE landscape plotter
-├── circuit.py           # circuit diagram rendering
-├── dynamic_flow.py      # time evolution & Rabi oscillations
-├── dashboard/           # FastAPI web server (optional)
-│   ├── app.py
-│   └── routes.py
-└── hardware.py          # IBM Quantum integration (optional)
+src/quantumviz/ 
+|-- \_\_init\_\_.py          -- public API surface
+|-- bloch.py             -- Bloch sphere renderer
+|-- state\_city.py        -- density matrix 3-D bar chart
+|-- cost\_landscape.py    -- QAOA / VQE landscape plotter
+|-- circuit.py           -- circuit diagram rendering
+|-- dynamic\_flow.py      -- time evolution & Rabi oscillations
+|-- dashboard/           -- FastAPI web server (optional)
+|   |-- app.py
+|   |-- routes.py
+|-- hardware.py          -- IBM Quantum integration (optional)
 \end{lstlisting}
 
 The public API is surfaced through \texttt{\_\_init\_\_.py} and consists of
@@ -373,9 +373,9 @@ The input file parser supports three notations:
 
 \noindent Example Python usage:
 \begin{lstlisting}
-from quantumviz import plot_bloch_sphere
+from quantumviz import plot\_bloch\_sphere
 
-plot_bloch_sphere('state.txt', 'bloch.png')
+plot\_bloch\_sphere('state.txt', 'bloch.png')
 \end{lstlisting}
 
 \noindent Equivalent CLI invocation:
@@ -413,7 +413,7 @@ at multiple stages of a quantum circuit:
 {
   "qubits": 2,
   "stages": [
-    {"name": "After H gate", "state_vector": [0.707, 0, 0, 0.707]}
+    {"name": "After H gate", "state\_vector": [0.707, 0, 0, 0.707]}
   ]
 }
 \end{lstlisting}
@@ -518,8 +518,8 @@ quantumviz serve
 \end{lstlisting}
 or equivalently via the Python API:
 \begin{lstlisting}
-from quantumviz.dashboard import start_server
-start_server(host='0.0.0.0', port=8000)
+from quantumviz.dashboard import start\_server
+start\_server(host='0.0.0.0', port=8000)
 \end{lstlisting}
 
 The dashboard exposes a REST API at \texttt{/api/v1/} with endpoints for each
@@ -556,7 +556,7 @@ Using the input file \texttt{examples/qaoa\_maxcut\_triangle.json}, which
 encodes the edge set $\{(0,1),(1,2),(0,2)\}$, we generate the landscape with:
 \begin{lstlisting}
 quantumviz cost-landscape qaoa \
-    examples/qaoa_maxcut_triangle.json -o triangle.png
+    examples/qaoa\_maxcut\_triangle.json -o triangle.png
 \end{lstlisting}
 
 The resulting figure shows the characteristic sinusoidal structure of the
@@ -586,11 +586,11 @@ maximal quantum entanglement, with two towers of equal height on the diagonal
 and two off-diagonal coherence towers of the same magnitude.
 The plot is generated with:
 \begin{lstlisting}
-from quantumviz import plot_state_city
+from quantumviz import plot\_state\_city
 import numpy as np
 
 bell = [1/np.sqrt(2), 0, 0, 1/np.sqrt(2)]
-plot_state_city(bell, r"Bell state $|\Phi^+\rangle$", "bell.png")
+plot\_state\_city(bell, r"Bell state $|\Phi^+\rangle$", "bell.png")
 \end{lstlisting}
 
 \begin{figure}[h]
@@ -599,8 +599,8 @@ plot_state_city(bell, r"Bell state $|\Phi^+\rangle$", "bell.png")
   [State City figure for $\ket{\Phi^+}$]\par
   \vspace{4em}}}
 \caption{State City visualization of the Bell state $\ket{\Phi^+}$.
-         Bar heights encode $|\rho_{ij}|$ and bar colors encode
-         $\arg(\rho_{ij})$.}
+         Bar heights encode $|\rho\_{ij}|$ and bar colors encode
+         $\arg(\rho\_{ij})$.}
 \label{fig:statecity}
 \end{figure}
 
