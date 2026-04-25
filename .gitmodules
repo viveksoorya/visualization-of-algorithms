@@ -1,3 +1,6 @@
 [submodule "quantumviz"]
 	path = quantumviz
 	url = https://github.com/QuantumVisualization/quantumviz
+[submodule "visualization-survey-paper"]
+	path = visualization-survey-paper
+	url = https://github.com/viveksoorya/visualization-survey-paper/
