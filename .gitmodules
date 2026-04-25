@@ -1,0 +1,3 @@
+[submodule "quantumviz"]
+	path = quantumviz
+	url = https://github.com/QuantumVisualization/quantumviz
